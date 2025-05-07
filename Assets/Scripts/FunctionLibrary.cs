@@ -37,9 +37,10 @@ public static class FunctionLibrary
     }
     
     public static Vector3 Sphere (float u, float v, float t) {
-        // u XZ plane degree
-        // v XY plane degree
-        return new(
+        // u XZ plane scale [-1, 1]
+        // v XY plane scale [-1, 1]
+        float r = 0.9f + 0.1f * Sin(PI * (6f * u + 4f * v + t));
+        return r * new Vector3(
             Cos(PI * 0.5f * v) * Cos(PI * u),
             Sin(PI * 0.5f * v),
             Cos(PI * 0.5f * v) * Sin(PI * u)
