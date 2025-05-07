@@ -6,8 +6,8 @@ public static class FunctionLibrary
 {
     public delegate Vector3 Function (float u, float v, float t);
     
-    public enum FunctionName { Wave, MultiWave, Ripple, Sphere }
-    static Function[] functions = {Wave, MultiWave, Ripple, Sphere};
+    public enum FunctionName { Wave, MultiWave, Ripple, Sphere, Torus}
+    static Function[] functions = {Wave, MultiWave, Ripple, Sphere, Torus};
     
     public static Function GetFunction (FunctionName name) {
         return functions[(int)name];
@@ -37,8 +37,8 @@ public static class FunctionLibrary
     }
     
     public static Vector3 Sphere (float u, float v, float t) {
-        // u XZ plane scale [-1, 1]
-        // v XY plane scale [-1, 1]
+        // u XZ plane scale [-1, 1] - [-pi, pi]
+        // v XY plane scale [-1, 1] - [-pi/2, pi/2]
         float r = 0.9f + 0.1f * Sin(PI * (6f * u + 4f * v + t));
         return r * new Vector3(
             Cos(PI * 0.5f * v) * Cos(PI * u),
@@ -47,4 +47,17 @@ public static class FunctionLibrary
         );
     }
     
+    public static Vector3 Torus (float u, float v, float t) {
+        // u XZ plane scale [-1, 1]
+        // v XY plane scale [-1, 1]
+        // r1 major radius
+        // r2 minor radius
+        float r1 = 0.7f + 0.1f * Sin(PI * (6f * u + 0.5f * t));
+        float r2 = 0.15f + 0.05f * Sin(PI * (8f * u + 4f * v + 2f * t));
+        return new(
+            (r1 + r2 * Cos(PI * v)) * Cos(PI * u),
+            r2 * Sin(PI * v),
+            (r1 + r2 * Cos(PI * v)) * Sin(PI * u)
+        );
+    }
 }
