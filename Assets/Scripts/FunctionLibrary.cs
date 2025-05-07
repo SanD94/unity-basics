@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 
 using static UnityEngine.Mathf;
@@ -5,8 +6,8 @@ public static class FunctionLibrary
 {
     public delegate Vector3 Function (float u, float v, float t);
     
-    public enum FunctionName { Wave, MultiWave, Ripple }
-    static Function[] functions = {Wave, MultiWave, Ripple};
+    public enum FunctionName { Wave, MultiWave, Ripple, Sphere }
+    static Function[] functions = {Wave, MultiWave, Ripple, Sphere};
     
     public static Function GetFunction (FunctionName name) {
         return functions[(int)name];
@@ -33,6 +34,16 @@ public static class FunctionLibrary
         w /= 1f + 10f * d;
 
         return new(u, w, v);
+    }
+    
+    public static Vector3 Sphere (float u, float v, float t) {
+        // u XZ plane degree
+        // v XY plane degree
+        return new(
+            Cos(PI * 0.5f * v) * Cos(PI * u),
+            Sin(PI * 0.5f * v),
+            Cos(PI * 0.5f * v) * Sin(PI * u)
+        );
     }
     
 }
