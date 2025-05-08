@@ -9,17 +9,31 @@ public static class FunctionLibrary
     public enum FunctionName { Wave, MultiWave, Ripple, Sphere, Torus}
     static Function[] functions = {Wave, MultiWave, Ripple, Sphere, Torus};
     
-    public static Function GetFunction (FunctionName name) {
+    public static Function GetFunction (FunctionName name) 
+    {
         return functions[(int)name];
     }
+    
+    public static FunctionName GetNextFunctionName (FunctionName name)
+    {
+        return (FunctionName)(((int)name + 1) % functions.Length);
+    }
+    
+    public static FunctionName GetRandomFunctionNameOtherThan (FunctionName name) 
+    {
+		var choice = (FunctionName)Random.Range(1, functions.Length);
+		return choice == name ? 0 : choice;
+	}
 
-    public static Vector3 Wave(float u, float v, float t) {
+    public static Vector3 Wave(float u, float v, float t) 
+    {
         float w = Sin(PI * (u + v + t));
 
         return new(u, w, v);
     }
 
-    public static Vector3 MultiWave(float u, float v, float t) {
+    public static Vector3 MultiWave(float u, float v, float t) 
+    {
         float w = Sin(PI * (u + 0.5f * t));
         w += 0.5f * Sin(2f * PI * (v + t));
         w += Sin(PI * (u + v + 0.25f * t));
@@ -47,7 +61,8 @@ public static class FunctionLibrary
         );
     }
     
-    public static Vector3 Torus (float u, float v, float t) {
+    public static Vector3 Torus (float u, float v, float t) 
+    {
         // u XZ plane scale [-1, 1]
         // v XY plane scale [-1, 1]
         // r1 major radius
