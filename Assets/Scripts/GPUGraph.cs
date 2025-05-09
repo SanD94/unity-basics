@@ -12,13 +12,15 @@ public class GPUGraph : MonoBehaviour
         stepId = Shader.PropertyToID("_Step"),
         timeId = Shader.PropertyToID("_Time");
     
+    const int maxResolution = 1000;
+    
     [SerializeField]
     Material material;
 
     [SerializeField]
     Mesh mesh;
     
-    [SerializeField, Range(10, 1000)]
+    [SerializeField, Range(10, maxResolution)]
     int resolution = 10;
     
     [SerializeField]
@@ -40,7 +42,7 @@ public class GPUGraph : MonoBehaviour
     ComputeBuffer positionsBuffer;
     void OnEnable()
     {
-        positionsBuffer = new ComputeBuffer(resolution * resolution, 3 * 4); // Vector3
+        positionsBuffer = new ComputeBuffer(maxResolution * maxResolution, 3 * 4); // Vector3
     }
 
     void OnDisable()
@@ -95,9 +97,12 @@ public class GPUGraph : MonoBehaviour
         material.SetBuffer(positionsId, positionsBuffer);
 		material.SetFloat(stepId, step);
         
-        var bounds = new Bounds(Vector3.zero, Vector3.one * (2f + 2f / resolution));
-        Graphics.DrawMeshInstancedProcedural(
-            mesh, 0, material, bounds, positionsBuffer.count
-        );
+        Bounds bounds = new(Vector3.zero, Vector3.one * (2f + 2f / resolution));
+        RenderParams rp = new(material) {
+            worldBounds = bounds
+        };
+
+        Graphics.RenderMeshPrimitives(rp, mesh, 0, resolution * resolution);
+
     }
 }

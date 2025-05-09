@@ -20,9 +20,54 @@ void SetPosition(uint3 id, float3 position) {
 
 float3 Wave(float u, float v, float t) {
     float w = sin(PI * (u + v + t));
-    float3 p = { u, w, v };
 
-    return p;
+    return float3(u, w, v);
+}
+
+ 
+float3 MultiWave(float u, float v, float t) {
+    float w = sin(PI * (u + 0.5 * t));
+    w += 0.5f * sin(2 * PI * (v + t));
+    w += sin(PI * (u + v + 0.25 * t));
+    w *= 1.0 / 2.5;
+
+    return float3(u, w, v);
+}
+
+
+
+float3 Ripple(float u, float v, float t) {
+    float d = sqrt(u * u + v * v);
+    float w = sin(PI * (4.0 * d - t));
+    w /= 1.0 + 10.0 * d;
+
+    return float3(u, w, v);
+}
+
+float3 Sphere (float u, float v, float t) {
+    // u XZ plane scale [-1, 1] - [-pi, pi]
+    // v XY plane scale [-1, 1] - [-pi/2, pi/2]
+    float r = 0.9 + 0.1 * sin(PI * (6.0 * u + 4.0 * v + t));
+    return r * float3(
+        cos(PI * 0.5 * v) * cos(PI * u),
+        sin(PI * 0.5 * v),
+        cos(PI * 0.5 * v) * sin(PI * u)
+    );
+}
+
+float3 Torus (float u, float v, float t) 
+{
+    // u XZ plane scale [-1, 1]
+    // v XY plane scale [-1, 1]
+    // r1 major radius
+    // r2 minor radius
+    float r1 = 0.7 + 0.1 * sin(PI * (6.0 * u + 0.5 * t));
+    float r2 = 0.15 + 0.05 * sin(PI * (8.0 * u + 4.0 * v + 2.0 * t));
+    return float3(
+        (r1 + r2 * cos(PI * v)) * cos(PI * u),
+        r2 * sin(PI * v),
+        (r1 + r2 * cos(PI * v)) * sin(PI * u)
+    );
 }
 
 [numthreads(8, 8, 1)]
