@@ -1,6 +1,10 @@
 // Each #kernel tells which function to compile; you can have many kernels
 #define PI 3.14159265358979323846
-#pragma kernel FunctionKernel
+#pragma kernel WaveKernel
+#pragma kernel MultiWaveKernel
+#pragma kernel RippleKernel
+#pragma kernel SphereKernel
+#pragma kernel TorusKernel
 
 RWStructuredBuffer<float3> _Positions;
 
@@ -70,9 +74,17 @@ float3 Torus (float u, float v, float t)
     );
 }
 
-[numthreads(8, 8, 1)]
-void FunctionKernel (uint3 id: SV_DISPATCHTHREADID) {
-    float2 uv = GetUV(id);
-    SetPosition(id, Wave(uv.x, uv.y, _Time));
-}
+#define KERNEL_FUNCTION(function) \
+    [numthreads(8, 8, 1)] \
+    void function##Kernel (uint3 id: SV_DISPATCHTHREADID) { \
+        float2 uv = GetUV(id); \
+        SetPosition(id, function(uv.x, uv.y, _Time)); \
+    } 
+
+KERNEL_FUNCTION(Wave)
+KERNEL_FUNCTION(MultiWave)
+KERNEL_FUNCTION(Ripple)
+KERNEL_FUNCTION(Sphere)
+KERNEL_FUNCTION(Torus)
+
 
