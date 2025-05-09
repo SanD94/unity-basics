@@ -10,6 +10,8 @@ public static class FunctionLibrary
     
     public enum FunctionName { Wave, MultiWave, Ripple, Sphere, Torus}
     static Function[] functions = {Wave, MultiWave, Ripple, Sphere, Torus};
+
+    public static int FunctionCount => functions.Length;
     
     public static Function GetFunction (FunctionName name) 
     {
