@@ -76,7 +76,7 @@ float3 Ripple(float u, float v, float t) {
 float3 Sphere (float u, float v, float t) {
     // u XZ plane scale [-1, 1] - [-pi, pi]
     // v XY plane scale [-1, 1] - [-pi/2, pi/2]
-    float r = 0.9 + 0.1 * sin(PI * (6.0 * u + 4.0 * v + t));
+    float r = 0.9 + 0.1 * sin(PI * (12.0 * u + 8.0 * v + t));
     return r * float3(
         cos(PI * 0.5 * v) * cos(PI * u),
         sin(PI * 0.5 * v),
@@ -90,8 +90,8 @@ float3 Torus (float u, float v, float t)
     // v XY plane scale [-1, 1]
     // r1 major radius
     // r2 minor radius
-    float r1 = 0.7 + 0.1 * sin(PI * (6.0 * u + 0.5 * t));
-    float r2 = 0.15 + 0.05 * sin(PI * (8.0 * u + 4.0 * v + 2.0 * t));
+    float r1 = 0.7 + 0.1 * sin(PI * (8.0 * u + 0.5 * t));
+    float r2 = 0.15 + 0.05 * sin(PI * (16.0 * u + 8.0 * v + 3.0 * t));
     return float3(
         (r1 + r2 * cos(PI * v)) * cos(PI * u),
         r2 * sin(PI * v),
