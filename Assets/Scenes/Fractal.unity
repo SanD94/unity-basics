@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 987c1d551aefad44db3ab6910a07babe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  depth: 4
+  depth: 6
 --- !u!23 &330476517
 MeshRenderer:
   m_ObjectHideFlags: 0
