@@ -37,11 +37,29 @@ public class Fractal : MonoBehaviour
             FractalPart part = parts[index];
 
             part.spinAngle += spinAngleDelta;
-            part.worldRotation = mul(parent.worldRotation,
+
+            float3 upAxis = mul(mul(parent.worldRotation, part.rotation), up());
+            float3 sagAxis = cross(up(), upAxis);
+            float sagMagnitude = length(sagAxis);
+
+            quaternion baseRotation;
+            if (sagMagnitude > 0)
+            {
+                sagAxis /= sagMagnitude;
+                quaternion sagRotation = quaternion.AxisAngle(sagAxis, PI * 0.25f * sagMagnitude);
+                baseRotation = mul(sagRotation, parent.worldRotation);
+            }
+            else
+            {
+                baseRotation = parent.worldRotation;
+            }
+
+
+            part.worldRotation = mul(baseRotation,
                 mul(part.rotation, quaternion.RotateY(part.spinAngle))
             );
             part.worldPosition = parent.worldPosition +
-                mul(parent.worldRotation, 1.5f * scale * part.direction);
+                mul(part.worldRotation, float3(0f, 1.5f * scale, 0f));
             parts[index] = part;
 
             float3x3 r = float3x3(part.worldRotation) * scale;
@@ -55,7 +73,7 @@ public class Fractal : MonoBehaviour
     int depth = 4;
 
     [SerializeField]
-    Mesh mesh;
+    Mesh mesh, leafMesh;
 
     [SerializeField]
     Material material;
@@ -104,7 +122,7 @@ public class Fractal : MonoBehaviour
             parts[i] = new NativeArray<FractalPart>(length, Allocator.Persistent);
             matrices[i] = new NativeArray<float3x4>(length, Allocator.Persistent);
             matricesBuffers[i] = new ComputeBuffer(length, stride);
-            sequenceNumbers[i] = new Vector4(Random.value, Random.value);
+            sequenceNumbers[i] = new Vector4(Random.value, Random.value, Random.value, Random.value);
         }
 
         parts[0][0] = CreatePart(0);
@@ -186,17 +204,19 @@ public class Fractal : MonoBehaviour
             buffer.SetData(matrices[i]);
             // set color
             Color colorA, colorB;
+            Mesh instanceMesh;
             if (i == leafIndex)
             {
                 colorA = leafColorA;
                 colorB = leafColorB;
+                instanceMesh = leafMesh;
             }
             else
             {
                 float gradientInterpolator = i / (matricesBuffers.Length - 2f);
                 colorA = gradientA.Evaluate(gradientInterpolator);
                 colorB = gradientB.Evaluate(gradientInterpolator);
-
+                instanceMesh = mesh;
             }
 
             propertyBlock.SetColor(colorAId, colorA);
@@ -211,7 +231,7 @@ public class Fractal : MonoBehaviour
                 matProps = propertyBlock
             };
 
-            Graphics.RenderMeshPrimitives(rp, mesh, 0, buffer.count);
+            Graphics.RenderMeshPrimitives(rp, instanceMesh, 0, buffer.count);
         }
     }
 
