@@ -61,7 +61,7 @@ public class Fractal : MonoBehaviour
     Material material;
 
     [SerializeField]
-    Gradient gradient;
+    Gradient gradientA, gradientB;
 
     // Job System Integration
     NativeArray<FractalPart>[] parts;
@@ -73,7 +73,8 @@ public class Fractal : MonoBehaviour
 
     static readonly int
         matricesId = Shader.PropertyToID("_Matrices"),
-        baseColorId = Shader.PropertyToID("_BaseColor"),
+        colorAId = Shader.PropertyToID("_ColorA"),
+        colorBId = Shader.PropertyToID("_ColorB"),
         sequenceNumbersId = Shader.PropertyToID("_SequenceNumbers");
 
     static float3[] directions = {
@@ -179,10 +180,9 @@ public class Fractal : MonoBehaviour
         {
             ComputeBuffer buffer = matricesBuffers[i];
             buffer.SetData(matrices[i]);
-            propertyBlock.SetColor(
-                baseColorId,
-                gradient.Evaluate(i / (matricesBuffers.Length - 1f))
-            );
+            float gradientInterpolator = i / (matricesBuffers.Length - 1f);
+            propertyBlock.SetColor(colorAId, gradientA.Evaluate(gradientInterpolator));
+            propertyBlock.SetColor(colorBId, gradientB.Evaluate(gradientInterpolator));
             propertyBlock.SetBuffer(matricesId, buffer);
             propertyBlock.SetVector(sequenceNumbersId, sequenceNumbers[i]);
 
