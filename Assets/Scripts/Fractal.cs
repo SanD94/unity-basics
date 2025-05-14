@@ -7,7 +7,6 @@ using Unity.Mathematics;
 using static Unity.Mathematics.math;
 using float3x4 = Unity.Mathematics.float3x4;
 using quaternion = Unity.Mathematics.quaternion;
-using UnityEngine.InputSystem.Composites;
 
 public class Fractal : MonoBehaviour
 {
@@ -51,7 +50,7 @@ public class Fractal : MonoBehaviour
     }
 
 
-    [SerializeField, Range(1, 8)]
+    [SerializeField, Range(2, 8)]
     int depth = 4;
 
     [SerializeField]
@@ -60,6 +59,9 @@ public class Fractal : MonoBehaviour
     [SerializeField]
     Material material;
 
+    [SerializeField]
+    Gradient gradient;
+
     // Job System Integration
     NativeArray<FractalPart>[] parts;
     NativeArray<float3x4>[] matrices;
@@ -67,7 +69,9 @@ public class Fractal : MonoBehaviour
     static MaterialPropertyBlock propertyBlock;
     ComputeBuffer[] matricesBuffers;
 
-    static readonly int matricesId = Shader.PropertyToID("_Matrices");
+    static readonly int
+        matricesId = Shader.PropertyToID("_Matrices"),
+        baseColorId = Shader.PropertyToID("_BaseColor");
 
     static float3[] directions = {
         up(), right(), left(), forward(), back()
@@ -169,6 +173,10 @@ public class Fractal : MonoBehaviour
         {
             ComputeBuffer buffer = matricesBuffers[i];
             buffer.SetData(matrices[i]);
+            propertyBlock.SetColor(
+                baseColorId,
+                gradient.Evaluate(i / (matricesBuffers.Length - 1f))
+            );
             propertyBlock.SetBuffer(matricesId, buffer);
 
             RenderParams rp = new(material)
