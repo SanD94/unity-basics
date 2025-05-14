@@ -5,9 +5,6 @@
     "m_Properties": [
         {
             "m_Id": "e22c125924084aa09375773720744884"
-        },
-        {
-            "m_Id": "1e323f5edbe948ed9c0cf2e0ca0a47c6"
         }
     ],
     "m_Keywords": [],
@@ -56,9 +53,6 @@
         },
         {
             "m_Id": "273a4506efaf4dbf98d4d5fdac46b5d1"
-        },
-        {
-            "m_Id": "ccba592915a545dea4bbd49f8778ce34"
         }
     ],
     "m_GroupDatas": [],
@@ -123,9 +117,9 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "ccba592915a545dea4bbd49f8778ce34"
+                    "m_Id": "a342e466f553421eb740bbf13baa8f2c"
                 },
-                "m_SlotId": 0
+                "m_SlotId": 2
             },
             "m_InputSlot": {
                 "m_Node": {
@@ -138,7 +132,7 @@
     "m_VertexContext": {
         "m_Position": {
             "x": 0.0,
-            "y": 0.0
+            "y": -56.0
         },
         "m_Blocks": [
             {
@@ -155,7 +149,7 @@
     "m_FragmentContext": {
         "m_Position": {
             "x": 0.0,
-            "y": 171.33334350585938
+            "y": 136.66665649414063
         },
         "m_Blocks": [
             {
@@ -207,9 +201,6 @@
     "m_ChildObjectList": [
         {
             "m_Id": "e22c125924084aa09375773720744884"
-        },
-        {
-            "m_Id": "1e323f5edbe948ed9c0cf2e0ca0a47c6"
         }
     ]
 }
@@ -246,6 +237,31 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Occlusion"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "0e7e2f81c3214edcbc305f5d0b9fbdfe",
+    "m_Id": 2,
+    "m_DisplayName": "FractalColor",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "FractalColor",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -321,31 +337,6 @@
 }
 
 {
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
-    "m_ObjectId": "1590eee119d740f19f9ba2348e2dab8f",
-    "m_Id": 0,
-    "m_DisplayName": "BaseColor",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
-    "m_StageCapability": 3,
-    "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_DefaultValue": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0,
-        "w": 0.0
-    },
-    "m_Labels": []
-}
-
-{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.PositionNode",
     "m_ObjectId": "18a9203dd1d54cb88108c63322489178",
@@ -380,36 +371,6 @@
     },
     "m_Space": 0,
     "m_PositionSource": 0
-}
-
-{
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "1e323f5edbe948ed9c0cf2e0ca0a47c6",
-    "m_Guid": {
-        "m_GuidSerialized": "53a55153-592b-403d-aa13-6fd5b6984b32"
-    },
-    "m_Name": "BaseColor",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "BaseColor",
-    "m_DefaultReferenceName": "_BaseColor",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 0.0
-    },
-    "isMainColor": false,
-    "m_ColorMode": 0
 }
 
 {
@@ -646,10 +607,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -180.6666259765625,
-            "y": 252.66665649414063,
+            "x": -186.6666259765625,
+            "y": 217.33334350585938,
             "width": 141.33331298828126,
-            "height": 36.00006103515625
+            "height": 36.0
         }
     },
     "m_Slots": [
@@ -767,6 +728,9 @@
         },
         {
             "m_Id": "1297934ae7844e13a658908abb0e2de4"
+        },
+        {
+            "m_Id": "0e7e2f81c3214edcbc305f5d0b9fbdfe"
         }
     ],
     "synonyms": [
@@ -858,42 +822,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Normal"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "ccba592915a545dea4bbd49f8778ce34",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -180.6666259765625,
-            "y": 205.33334350585938,
-            "width": 135.33331298828126,
-            "height": 36.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "1590eee119d740f19f9ba2348e2dab8f"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_DismissedVersion": 0,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "1e323f5edbe948ed9c0cf2e0ca0a47c6"
-    }
 }
 
 {

@@ -18,6 +18,7 @@
 ### Formatting
 - Use 4-space indentation
 - One statement per line
+- Opening braces on next line in C# files but on same line in others as declaration
 - Group related code blocks with blank lines
 
 ### Unity-Specific Patterns
