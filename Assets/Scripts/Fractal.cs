@@ -51,7 +51,7 @@ public class Fractal : MonoBehaviour
     }
 
 
-    [SerializeField, Range(2, 8)]
+    [SerializeField, Range(3, 8)]
     int depth = 4;
 
     [SerializeField]
@@ -62,6 +62,9 @@ public class Fractal : MonoBehaviour
 
     [SerializeField]
     Gradient gradientA, gradientB;
+
+    [SerializeField]
+    Color leafColorA, leafColorB;
 
     // Job System Integration
     NativeArray<FractalPart>[] parts;
@@ -175,14 +178,30 @@ public class Fractal : MonoBehaviour
         }
         jobHandle.Complete();
 
+        int leafIndex = matricesBuffers.Length - 1;
         var bounds = new Bounds(rootPart.worldPosition, 3f * objectScale * Vector3.one);
         for (int i = 0; i < matricesBuffers.Length; i++)
         {
             ComputeBuffer buffer = matricesBuffers[i];
             buffer.SetData(matrices[i]);
-            float gradientInterpolator = i / (matricesBuffers.Length - 1f);
-            propertyBlock.SetColor(colorAId, gradientA.Evaluate(gradientInterpolator));
-            propertyBlock.SetColor(colorBId, gradientB.Evaluate(gradientInterpolator));
+            // set color
+            Color colorA, colorB;
+            if (i == leafIndex)
+            {
+                colorA = leafColorA;
+                colorB = leafColorB;
+            }
+            else
+            {
+                float gradientInterpolator = i / (matricesBuffers.Length - 2f);
+                colorA = gradientA.Evaluate(gradientInterpolator);
+                colorB = gradientB.Evaluate(gradientInterpolator);
+
+            }
+
+            propertyBlock.SetColor(colorAId, colorA);
+            propertyBlock.SetColor(colorBId, colorB);
+
             propertyBlock.SetBuffer(matricesId, buffer);
             propertyBlock.SetVector(sequenceNumbersId, sequenceNumbers[i]);
 
